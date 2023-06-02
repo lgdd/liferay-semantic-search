@@ -1,0 +1,56 @@
+version: "3"
+services:
+  liferay:
+    image: liferay/dxp:7.4.13-u71
+    ports:
+      - 8080:8080
+    volumes:
+      - ./liferay/deploy:/mnt/liferay/deploy
+      - ./liferay/files:/mnt/liferay/files
+    depends_on:
+      - txtai
+      - elasticsearch
+  txtai:
+    build:
+      dockerfile: Dockerfile
+      context: txtai
+    ports:
+      - "8000:8000"
+  elasticsearch:
+    build:
+      dockerfile: elasticsearch/Dockerfile
+      context: .
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.17.9
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch
+  database:
+    image: mysql:8
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_DATABASE: lportal
+      MYSQL_USER: liferay
+      MYSQL_PASSWORD: liferay
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3306:3306
+    volumes:
+      - database_data:/var/lib/mysql
+    cap_add:
+      - SYS_NICE
+
+volumes:
+  liferay_data:
+  elasticsearch_data:
+  database_data:
