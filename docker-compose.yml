@@ -1,21 +1,23 @@
-version: "3"
+version: "3.9"
 services:
   liferay:
-    image: liferay/dxp:7.4.13-u71
+    image: liferay/dxp:2023.q3.4
     ports:
       - 8080:8080
     volumes:
       - ./liferay/deploy:/mnt/liferay/deploy
       - ./liferay/files:/mnt/liferay/files
     depends_on:
-      - txtai
-      - elasticsearch
+      database:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
   txtai:
     build:
       dockerfile: Dockerfile
       context: txtai
     ports:
-      - "8000:8000"
+      - 8000:8000
   elasticsearch:
     build:
       dockerfile: elasticsearch/Dockerfile
@@ -24,17 +26,20 @@ services:
       memlock:
         soft: -1
         hard: -1
+    ports:
+     - 9200:9200
     volumes:
       - elasticsearch_data:/usr/share/elasticsearch/data
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.17.9
+    image: docker.elastic.co/kibana/kibana:8.11.4
     environment:
       ELASTICSEARCH_URL: http://elasticsearch:9200
       ELASTICSEARCH_HOSTS: http://elasticsearch:9200
     ports:
       - 5601:5601
     depends_on:
-      - elasticsearch
+      elasticsearch:
+        condition: service_healthy
   database:
     image: mysql:8
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
@@ -49,6 +54,12 @@ services:
       - database_data:/var/lib/mysql
     cap_add:
       - SYS_NICE
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 2s
+      retries: 5
+      start_period: 10s
 
 volumes:
   liferay_data:
