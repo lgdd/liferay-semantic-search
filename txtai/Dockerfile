@@ -1,6 +1,4 @@
-# Set base image
-ARG BASE_IMAGE=neuml/txtai-cpu
-FROM $BASE_IMAGE
+FROM neuml/txtai-cpu
 
 # Copy configuration
 COPY config.yml .

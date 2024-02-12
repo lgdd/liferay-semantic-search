@@ -5,8 +5,8 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - ./liferay/deploy:/mnt/liferay/deploy
       - ./liferay/files:/mnt/liferay/files
+      - liferay_data:/opt/liferay/data
     depends_on:
       database:
         condition: service_healthy
