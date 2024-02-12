@@ -21,6 +21,7 @@ This will start the following services:
 Once everything started, you can login into Liferay DXP and start creating supported content for semantic search (see supported asset types in the [docs](https://learn.liferay.com/w/dxp/using-search/liferay-enterprise-search/search-experiences/semantic-search)).
 
 The necessary blueprint and element to execute a semantic search should be already created thanks to the batch client extension (see the [source](liferay/workspace/client-extensions/semantic-search-batch) & the [docs](https://learn.liferay.com/w/dxp/building-applications/client-extensions/batch-client-extensions)).
+> This feature requires Liferay DXP 7.4 U94+.
 
 All you need to do, once you have some content, is to configure your search page and add the blueprint widget configured to use the `Semantic Search Blueprint`. If you want the semantic search to work with the search bar autocomplete feature, you can configure the search bar to use the `Semantic Search Blueprints` intead of the default suggestions.
 
