@@ -25,33 +25,6 @@
 						{
 							"fields": [
 								{
-									"defaultValue": [
-										{
-											"label": "com.liferay.blogs.model.BlogsEntry",
-											"value": "com.liferay.blogs.model.BlogsEntry"
-										},
-										{
-											"label": "com.liferay.journal.model.JournalArticle",
-											"value": "com.liferay.journal.model.JournalArticle"
-										},
-										{
-											"label": "com.liferay.knowledge.base.model.KBArticle",
-											"value": "com.liferay.knowledge.base.model.KBArticle"
-										},
-										{
-											"label": "com.liferay.message.boards.model.MBMessage",
-											"value": "com.liferay.message.boards.model.MBMessage"
-										},
-										{
-											"label": "com.liferay.wiki.model.WikiPage",
-											"value": "com.liferay.wiki.model.WikiPage"
-										}
-									],
-									"name": "entry_class_names",
-									"label": "Entry Class Names",
-									"type": "multiselect"
-								},
-								{
 									"defaultValue": 1,
 									"name": "boost",
 									"typeOptions": {
@@ -245,7 +218,28 @@
 															},
 															{
 																"terms": {
-																	"entryClassName": "${configuration.entry_class_names}"
+																	"entryClassName": [
+																		{
+																			"label": "com.liferay.blogs.model.BlogsEntry",
+																			"value": "com.liferay.blogs.model.BlogsEntry"
+																		},
+																		{
+																			"label": "com.liferay.journal.model.JournalArticle",
+																			"value": "com.liferay.journal.model.JournalArticle"
+																		},
+																		{
+																			"label": "com.liferay.knowledge.base.model.KBArticle",
+																			"value": "com.liferay.knowledge.base.model.KBArticle"
+																		},
+																		{
+																			"label": "com.liferay.message.boards.model.MBMessage",
+																			"value": "com.liferay.message.boards.model.MBMessage"
+																		},
+																		{
+																			"label": "com.liferay.wiki.model.WikiPage",
+																			"value": "com.liferay.wiki.model.WikiPage"
+																		}
+																	]
 																}
 															},
 															{
